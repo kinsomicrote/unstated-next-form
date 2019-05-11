@@ -23,10 +23,10 @@ const useForm = () => {
   };
 };
 
-const Form = createContainer(useForm);
+const FormContainer = createContainer(useForm);
 
-const FormContainer = () => {
-  const form = Form.useContainer();
+const Form = () => {
+  const form = FormContainer.useContainer();
   return (
     <div>
       <p>Hello! {form.name}</p>
@@ -44,7 +44,7 @@ const FormContainer = () => {
 
 const App = () => (
   <Form.Provider>
-    <FormContainer />
+    <Form />
   </Form.Provider>
 )
 
