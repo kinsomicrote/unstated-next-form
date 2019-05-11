@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { createContainer } from "unstated-next";
 
-function App() {
+const useForm = () => {
+  const [input, setValue] = useState("");
+  const [name, setName] = useState("Barney Stinson");
+
+  const handleInput = event => {
+    setValue(event.target.value);
+  };
+
+  const updateName = event => {
+    event.preventDefault();
+    setName(input);
+    setValue("");
+  };
+
+  return {
+    input,
+    name,
+    handleInput,
+    updateName,
+  };
+};
+
+const Form = createContainer(useForm);
+
+const FormContainer = () => {
+  const form = Form.useContainer();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>Hello! {form.name}</p>
+      <div>
+        <input
+          type="text"
+          value={form.input}
+          onChange={form.handleInput}
+        />
+        <button onClick={form.updateName}>Save</button>
+      </div>
     </div>
   );
-}
+};
+
+const App = () => (
+  <Form.Provider>
+    <FormContainer />
+  </Form.Provider>
+)
 
 export default App;
